@@ -13,6 +13,10 @@ set -ouex pipefail
 dnf5 install -y tmux 
 
 # Envision 3.2.0 missing build dependencies on top of Bazzite DX
+# Workaround for
+# > package sdl2-compat-devel-2.32.52-1.fc42.x86_64 from fedora requires pkgconfig(glu), but none of the providers can be installed
+# > package mesa-libGLU-devel-9.0.3-6.fc42.x86_64 from fedora is filtered out by exclude filtering
+dnf5 --setopt=disable_excludes=* install -y mesa-libGLU-devel
 # For "Lighthouse Driver - Envision Default"
 dnf5 install -y eigen3-devel glslang-devel glslc libbsd-devel systemd-devel libusb1 libusb1-devel libXrandr-devel mesa-libGL-devel ninja-build openxr-devel SDL2-devel wayland-devel wayland-protocols-devel
 # For "WiVRn - Envision Default"
