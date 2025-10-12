@@ -12,6 +12,14 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y tmux 
 
+# WiVRn + Lighthouse driver
+# https://lvra.gitlab.io/docs/fossvr/wivrn/
+# > These packages come with lighthouse support enabled (Flatpak & Envision does NOT)
+# > ...
+# > - Fedora: Install wivrn-dashboard via DNF
+# > ...
+dnf5 install -y wivrn-dashboard
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
