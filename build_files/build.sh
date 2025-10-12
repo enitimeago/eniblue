@@ -17,8 +17,12 @@ dnf5 install -y tmux
 # > package sdl2-compat-devel-2.32.52-1.fc42.x86_64 from fedora requires pkgconfig(glu), but none of the providers can be installed
 # > package mesa-libGLU-devel-9.0.3-6.fc42.x86_64 from fedora is filtered out by exclude filtering
 dnf5 --setopt=disable_excludes=* install -y mesa-libGLU-devel
-# For "Lighthouse Driver - Envision Default"
-dnf5 install -y eigen3-devel glslang-devel glslc libbsd-devel systemd-devel libusb1 libusb1-devel libXrandr-devel mesa-libGL-devel ninja-build openxr-devel SDL2-devel wayland-devel wayland-protocols-devel
+# Workaround for
+# > package mesa-libGL-devel-25.1.9-1.fc42.x86_64 from updates-archive requires (mesa-libGL(x86-64) = 25.1.9-1.fc42 if mesa-libGL(x86-64)), but none of the providers can be installed
+# > package mesa-libGL-25.1.9-1.fc42.x86_64 from updates-archive is filtered out by exclude filtering
+dnf5 --setopt=disable_excludes=* install -y mesa-libGL-devel
+# For "Lighthouse Driver - Envision Default" (excluding mesa-libGL-devel, since already installed above)
+dnf5 install -y eigen3-devel glslang-devel glslc libbsd-devel systemd-devel libusb1 libusb1-devel libXrandr-devel ninja-build openxr-devel SDL2-devel wayland-devel wayland-protocols-devel
 # For "WiVRn - Envision Default"
 dnf5 install -y avahi-devel avahi-glib-devel cli11-devel eigen3-devel glib2-devel glib2-devel glslang-devel gstreamer1-plugins-base-devel gstreamer1-devel ffmpeg-devel ffmpeg-devel ffmpeg-devel libnotify-devel pipewire-devel ffmpeg-devel systemd-devel libva-devel libXrandr-devel ninja-build json-devel openxr-devel patch systemd-devel x264-devel
 
