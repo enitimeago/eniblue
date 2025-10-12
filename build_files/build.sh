@@ -24,7 +24,10 @@ dnf5 --setopt=disable_excludes=* install -y mesa-libGL-devel
 # For "Lighthouse Driver - Envision Default" (excluding mesa-libGL-devel, since already installed above)
 dnf5 install -y eigen3-devel glslang-devel glslc libbsd-devel systemd-devel libusb1 libusb1-devel libXrandr-devel ninja-build openxr-devel SDL2-devel wayland-devel wayland-protocols-devel
 # For "WiVRn - Envision Default"
-dnf5 install -y avahi-devel avahi-glib-devel cli11-devel eigen3-devel glib2-devel glib2-devel glslang-devel gstreamer1-plugins-base-devel gstreamer1-devel ffmpeg-devel ffmpeg-devel ffmpeg-devel libnotify-devel pipewire-devel ffmpeg-devel systemd-devel libva-devel libXrandr-devel ninja-build json-devel openxr-devel patch systemd-devel x264-devel
+# (See https://rpmfusion.org/Howto/Multimedia regarding ffmpeg)
+dnf5 install -y --allowerasing --from-repo=rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates ffmpeg-devel
+dnf5 install -y --from-repo=rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates x264-devel
+dnf5 install -y avahi-devel avahi-glib-devel cli11-devel eigen3-devel glib2-devel glib2-devel glslang-devel gstreamer1-plugins-base-devel gstreamer1-devel libnotify-devel pipewire-devel systemd-devel libva-devel libXrandr-devel ninja-build json-devel openxr-devel patch systemd-devel
 
 # Use a COPR Example:
 #
