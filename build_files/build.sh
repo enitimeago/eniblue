@@ -27,6 +27,26 @@ dnf5 --setopt=disable_excludes=* install -y bluez-libs-devel
 ## Remaining dependencies packaged by Fedora
 dnf5 install -y envision-wivrn
 
+### Manual installs
+
+# Universal Blue base image /usr/local -> /var/usrlocal
+mkdir -p /var/usrlocal/bin
+
+# Rust toolchain
+dnf5 install -y cargo
+export CARGO_HOME=/tmp/cargo
+mkdir -p "$CARGO_HOME/bin"
+PATH="$PATH:$CARGO_HOME/bin"
+
+# Monado Tracking Origin Calibrator (motoc)
+dnf5 install -y openxr-devel
+cargo install --locked --git https://github.com/galister/motoc.git
+cp "$CARGO_HOME/bin/motoc" /usr/local/bin/
+
+# Cleanup Rust toolchain and replace with rustup for end users
+dnf5 remove -y cargo
+dnf5 install -y rustup
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
