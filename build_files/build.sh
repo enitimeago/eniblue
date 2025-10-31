@@ -29,6 +29,8 @@ dnf5 install -y --allowerasing --from-repo=rpmfusion-free,rpmfusion-free-updates
 dnf5 install -y --from-repo=rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates x264-devel
 ## bluez-libs-devel from fedora satisfies pkgconfig(bluez) but is filtered out by exclude filtering
 dnf5 --setopt=disable_excludes=* install -y bluez-libs-devel
+## pipewire-libs-1.4.{9-1,8-2}.fc43.{i686,x86_64} (etc) from updates is filtered out by exclude filtering
+dnf5 --setopt=disable_excludes=* install -y pipewire-devel
 ## Remaining dependencies packaged by Fedora
 dnf5 install -y envision-wivrn
 
