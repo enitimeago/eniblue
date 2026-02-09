@@ -36,7 +36,8 @@ dnf5 install -y envision-wivrn
 
 # Maybe WiVRn is working now?
 # https://gitlab.com/lvra/lvra.gitlab.io/-/commit/a8376e6209a30c36bb4f2af9944938dd2b0c4e23
-dnf5 install -y wivrn
+# At time of writing does not seem to pull in wivrn-dashboard automatically?
+dnf5 install -y wivrn wivrn-dashboard
 
 ### Manual installs
 
