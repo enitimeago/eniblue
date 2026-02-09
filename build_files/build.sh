@@ -34,6 +34,10 @@ dnf5 --setopt=disable_excludes=* install -y pipewire-devel
 ## Remaining dependencies packaged by Fedora
 dnf5 install -y envision-wivrn
 
+# Maybe WiVRn is working now?
+# https://gitlab.com/lvra/lvra.gitlab.io/-/commit/a8376e6209a30c36bb4f2af9944938dd2b0c4e23
+dnf5 install -y wivrn
+
 ### Manual installs
 
 # Rust toolchain
