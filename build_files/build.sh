@@ -14,29 +14,7 @@ dnf5 -y copr enable ilyaz/LACT
 dnf5 install -y lact
 systemctl enable lactd
 
-# Envision 3.2.0 missing build dependencies on top of Bazzite DX
-# For "Lighthouse Driver - Envision Default"
-## mesa-libGLU-devel from fedora satisfies pkgconfig(glu) but is filtered out by exclude filtering
-dnf5 --setopt=disable_excludes=* install -y mesa-libGLU-devel
-## mesa-libGL-devel from updates-archive satisfies mesa-libGL(x86-64) but is filtered out by exclude filtering
-dnf5 --setopt=disable_excludes=* install -y mesa-libGL-devel
-## Remaining dependencies provided by Envision missing dependencies error
-dnf5 install -y eigen3-devel glslang-devel glslc libbsd-devel systemd-devel libusb1 libusb1-devel libXrandr-devel ninja-build openxr-devel SDL2-devel wayland-devel wayland-protocols-devel
-# For "WiVRn - Envision Default"
-## Fully replace ffmpeg-free with ffmpeg https://rpmfusion.org/Howto/Multimedia
-dnf5 install -y --allowerasing --from-repo=rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates ffmpeg-devel
-## x264-devel comes from RPM Fusion
-dnf5 install -y --from-repo=rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates x264-devel
-## bluez-libs-devel from fedora satisfies pkgconfig(bluez) but is filtered out by exclude filtering
-dnf5 --setopt=disable_excludes=* install -y bluez-libs-devel
-## pipewire-libs-1.4.{9-1,8-2}.fc43.{i686,x86_64} (etc) from updates is filtered out by exclude filtering
-dnf5 --setopt=disable_excludes=* install -y pipewire-devel
-## Remaining dependencies packaged by Fedora
-dnf5 install -y envision-wivrn
-
-# Maybe WiVRn is working now?
-# https://gitlab.com/lvra/lvra.gitlab.io/-/commit/a8376e6209a30c36bb4f2af9944938dd2b0c4e23
-# At time of writing does not seem to pull in wivrn-dashboard automatically?
+# WiVRn
 dnf5 install -y wivrn wivrn-dashboard
 
 ### Manual installs
