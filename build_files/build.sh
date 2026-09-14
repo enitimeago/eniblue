@@ -14,8 +14,9 @@ dnf5 -y copr enable ilyaz/LACT
 dnf5 install -y lact
 systemctl enable lactd
 
-# WiVRn
-dnf5 install -y wivrn wivrn-dashboard
+# WiVRn 26.9 from testing
+# At time of writing stable is 26.6.2 which is incompatible with 26.9 client
+dnf5 install -y wivrn wivrn-dashboard --enablerepo=updates-testing
 
 ### Manual installs
 
