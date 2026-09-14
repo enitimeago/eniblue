@@ -18,6 +18,11 @@ systemctl enable lactd
 # At time of writing stable is 26.6.2 which is incompatible with 26.9 client
 dnf5 install -y wivrn wivrn-dashboard --enablerepo=updates-testing
 
+# Umbriel nightly via Terra
+dnf5 config-manager setopt terra.enabled=1
+dnf5 install -y umbriel-nightly
+dnf5 config-manager setopt terra.enabled=0
+
 ### Manual installs
 
 # Rust toolchain
