@@ -23,6 +23,9 @@ dnf5 config-manager setopt terra.enabled=1
 dnf5 install -y umbriel-nightly
 dnf5 config-manager setopt terra.enabled=0
 
+# Noctalia
+dnf5 install -y noctalia
+
 ### Manual installs
 
 # Rust toolchain
