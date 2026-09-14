@@ -17,6 +17,14 @@
       "matchDepTypes": ["container"],
       "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
     },
+    // Bazzite's base image updates daily, `"automerge": true` would
+    // create an audit trail for what `stable` actually maps to but
+    // would make the commit history unreadable.
+    {
+      "enabled": false,
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["digest"]
+    },
   ],
 
   // Track motoc, which is installed from git in build_files/build.sh.
