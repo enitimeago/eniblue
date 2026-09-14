@@ -28,7 +28,9 @@ PATH="$PATH:$CARGO_HOME/bin"
 
 # Monado Tracking Origin Calibrator (motoc)
 dnf5 install -y openxr-devel
-cargo install --locked --git https://github.com/galister/motoc.git
+# renovate: datasource=github-tags depName=galister/motoc
+MOTOC_VERSION="v0.4.0"
+cargo install --locked --git https://github.com/galister/motoc.git --tag "${MOTOC_VERSION}" motoc
 cp "$CARGO_HOME/bin/motoc" /usr/bin/
 
 # Cleanup Rust toolchain and replace with rustup for end users

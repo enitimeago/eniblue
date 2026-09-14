@@ -17,5 +17,17 @@
       "matchDepTypes": ["container"],
       "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
     },
-  ]
+  ],
+
+  // Track motoc, which is installed from git in build_files/build.sh.
+  // The annotation above MOTOC_VERSION tells Renovate to bump the tag.
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["build_files/build.sh"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+MOTOC_VERSION=\"(?<currentValue>.*?)\"",
+      ],
+    },
+  ],
 }
