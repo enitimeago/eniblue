@@ -13,10 +13,6 @@ You have been warned.
 - Uses Bazzite DX `ghcr.io/ublue-os/bazzite-dx:stable` as the base image
   - Only AMD GPUs with KDE supported currently
 - Adds [LACT](https://github.com/ilya-zlobintsev/LACT) for changing AMD GPU power profile to VR
-  - CoreCtrl was initially considered but not chosen as it is now [in maintenance mode](https://www.gamingonlinux.com/2025/05/corectrl-app-has-entered-maintenance-mode-with-no-new-features-coming/)
-- Adds necessary build dependencies for [Envision](https://gitlab.com/gabmus/envision) to build Monado and WiVRn with Lighthouse support
-  - I am currently comfortable with these build dependencies in my base image. If you are not, please consider directly using Bazzite with [AtomicXR](https://tangled.org/@matrixfurry.com/atomic-xr) instead
-  - Extra flags [must be set](https://lvra.gitlab.io/docs/fossvr/wivrn/#option-b-build-using-envision) in Envision to build WiVRn with Lighthouse support
 - Adds [motoc](https://github.com/galister/motoc) for mixing Lighthouse trackers with other devices
   - This is the equivalent of Space Calibrator
 
