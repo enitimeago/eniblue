@@ -1,0 +1,22 @@
+# cargo-deny policy for the supply-chain audit CI job.
+# Used by .github/workflows/supply-chain.yml, which runs this against the
+# Cargo.lock of each tool built from git in build_files/build.sh.
+#
+# The split is deliberate, and mirrors how the daily image build should
+# behave:
+#   * genuine security advisories  -> ERROR  (the audit job fails, loudly)
+#   * a plain yanked crate          -> WARN   (reported, never gates a build)
+#
+# so a benign yank like chacha20 0.10.1 (yanked as a bad publish, fixed in
+# 0.10.2, no RustSec advisory) informs us without ever breaking a build.
+
+[advisories]
+version = 2
+# A yank is usually an accidental publish or a minor regression, not a
+# security pull. Surface it, but don't fail on it. Under version = 2,
+# vulnerability and unsound advisories are always errors and cannot be
+# downgraded here — that is exactly the policy we want.
+yanked = "warn"
+# Add specific advisory IDs here to silence a reviewed false positive, e.g.
+#   ignore = ["RUSTSEC-0000-0000"]
+ignore = []

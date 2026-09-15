@@ -1,0 +1,72 @@
+---
+name: Supply-chain audit
+# Audits the Rust dependency graph of each tool built from git in
+# build_files/build.sh (motoc, oscavmgr, ...) with cargo-deny.
+#
+# This is deliberately DECOUPLED from build.yml: it never gates the image
+# build. Per deny.toml, a yanked crate only warns, while a genuine security
+# advisory fails this job so it is surfaced without wedging the daily image.
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'build_files/build.sh'
+      - 'deny.toml'
+      - '.github/workflows/supply-chain.yml'
+  schedule:
+    # Weekly, Mondays 11:00 UTC. Catches advisories newly published against
+    # already-pinned deps. Change to e.g. '0 11 * * *' for a daily cadence.
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: cargo-deny (${{ matrix.tool.name }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        tool:
+          - { name: motoc, repo: galister/motoc, var: MOTOC_VERSION }
+          - { name: oscavmgr, repo: galister/oscavmgr, var: OSCAVMGR_VERSION }
+    steps:
+      - name: Checkout eniblue
+        uses: actions/checkout@v4
+
+      - name: Resolve pinned tag from build.sh
+        id: ver
+        run: |
+          tag="$(grep -oP '${{ matrix.tool.var }}="\K[^"]+' build_files/build.sh | head -1)"
+          if [ -z "$tag" ]; then
+            echo "::error::Could not find ${{ matrix.tool.var }} in build_files/build.sh"
+            exit 1
+          fi
+          echo "Auditing ${{ matrix.tool.repo }} @ $tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout ${{ matrix.tool.name }} source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.tool.repo }}
+          ref: ${{ steps.ver.outputs.tag }}
+          path: src
+
+      - name: Install cargo-deny
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deny
+
+      - name: Run cargo-deny (advisories + yanked)
+        run: |
+          # cargo-deny auto-discovers deny.toml next to the manifest.
+          cp deny.toml src/deny.toml
+          cd src
+          cargo deny check advisories
