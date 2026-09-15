@@ -41,6 +41,12 @@ MOTOC_VERSION="v0.4.0"
 cargo install --locked --git https://github.com/galister/motoc.git --tag "${MOTOC_VERSION}" motoc
 cp "$CARGO_HOME/bin/motoc" /usr/bin/
 
+# OscAvMgr
+# renovate: datasource=github-tags depName=galister/oscavmgr
+OSCAVMGR_VERSION="v26.8.0"
+cargo install --locked --git https://github.com/galister/oscavmgr.git --tag "${OSCAVMGR_VERSION}" oscavmgr
+cp "$CARGO_HOME/bin/oscavmgr" /usr/bin/
+
 # Cleanup Rust toolchain and replace with rustup for end users
 dnf5 remove -y cargo
 dnf5 install -y rustup
