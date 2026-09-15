@@ -1,0 +1,40 @@
+# cargo-deny policy for the supply-chain audit CI job.
+# Used by .github/workflows/supply-chain.yml, which runs this against the
+# Cargo.lock of each tool built from git in build_files/build.sh.
+#
+# The split is deliberate, and mirrors how the daily image build should
+# behave:
+#   * genuine security advisories  -> ERROR  (the audit job fails, loudly)
+#   * a plain yanked crate          -> WARN   (reported, never gates a build)
+#
+# so a benign yank like chacha20 0.10.1 (yanked as a bad publish, fixed in
+# 0.10.2, no RustSec advisory) informs us without ever breaking a build.
+
+[advisories]
+version = 2
+# A yank is usually an accidental publish or a minor regression, not a
+# security pull. Surface it, but don't fail on it. Under version = 2,
+# vulnerability and unsound advisories are always errors and cannot be
+# downgraded here — that is exactly the policy we want.
+yanked = "warn"
+# Baseline of advisories present at the pinned tags as of 2026-09-16
+# (oscavmgr v26.8.0, motoc v0.4.0). Every one is in a *transitive* dep of a
+# third-party pinned tag — none is fixable from this repo; only the upstream
+# tools can bump them. Baselining keeps the check green while still failing
+# on any NEW advisory. Re-review this list whenever Renovate bumps a tool: a
+# dropped ID that no longer resolves is harmless, and new deps get audited.
+ignore = [
+  # Vulnerabilities (low real-world risk for a localhost VR tool):
+  "RUSTSEC-2021-0078", # hyper 0.10 Content-Length request smuggling (via websocket 0.27)
+  "RUSTSEC-2021-0079", # hyper 0.10 Transfer-Encoding integer overflow (via websocket 0.27)
+  "RUSTSEC-2024-0421", # idna punycode label handling
+  "RUSTSEC-2020-0071", # time 0.1 localtime_r segfault
+  # Unsound:
+  "RUSTSEC-2026-0190", # anyhow Error::downcast_mut (motoc)
+  # Unmaintained (no safe upgrade available):
+  "RUSTSEC-2025-0141", # bincode 1.x
+  "RUSTSEC-2024-0436", # paste
+  "RUSTSEC-2025-0124", # rand_os
+  "RUSTSEC-2023-0081", # safemem
+  "RUSTSEC-2021-0144", # traitobject
+]
