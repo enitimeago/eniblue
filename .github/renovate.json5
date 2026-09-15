@@ -27,14 +27,16 @@
     },
   ],
 
-  // Track motoc, which is installed from git in build_files/build.sh.
-  // The annotation above MOTOC_VERSION tells Renovate to bump the tag.
+  // Track the tools installed from git in build_files/build.sh (motoc,
+  // oscavmgr, ...). Each is pinned to a `<NAME>_VERSION="vX.Y.Z"` shell
+  // variable preceded by a `# renovate:` annotation; the generalized
+  // `\w+_VERSION` match keeps every such tool bumped, not just motoc.
   "customManagers": [
     {
       "customType": "regex",
       "managerFilePatterns": ["build_files/build.sh"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+MOTOC_VERSION=\"(?<currentValue>.*?)\"",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+_VERSION=\"(?<currentValue>.*?)\"",
       ],
     },
   ],
