@@ -39,7 +39,7 @@ jobs:
           - { name: oscavmgr, repo: galister/oscavmgr, var: OSCAVMGR_VERSION }
     steps:
       - name: Checkout eniblue
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Resolve pinned tag from build.sh
         id: ver
@@ -53,14 +53,14 @@ jobs:
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Checkout ${{ matrix.tool.name }} source
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: ${{ matrix.tool.repo }}
           ref: ${{ steps.ver.outputs.tag }}
           path: src
 
       - name: Install cargo-deny
-        uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@26e9283f268b880168bdbd2c545dfcd60ec2c6ab # v2
         with:
           tool: cargo-deny
 
