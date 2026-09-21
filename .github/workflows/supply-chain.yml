@@ -39,7 +39,7 @@ jobs:
           - { name: oscavmgr, repo: galister/oscavmgr, var: OSCAVMGR_VERSION }
     steps:
       - name: Checkout eniblue
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Resolve pinned tag from build.sh
         id: ver
@@ -53,7 +53,7 @@ jobs:
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Checkout ${{ matrix.tool.name }} source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ matrix.tool.repo }}
           ref: ${{ steps.ver.outputs.tag }}
