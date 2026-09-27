@@ -30,7 +30,7 @@ concurrency:
 jobs:
   audit:
     name: cargo-deny (${{ matrix.tool.name }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
