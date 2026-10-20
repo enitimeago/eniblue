@@ -37,4 +37,7 @@ ignore = [
   "RUSTSEC-2025-0124", # rand_os
   "RUSTSEC-2023-0081", # safemem
   "RUSTSEC-2021-0144", # traitobject
+  "RUSTSEC-2026-0370", # zvariant (merged into zbus 6; via alvr_common -> rfd -> ashpd -> zbus 4)
+  "RUSTSEC-2026-0371", # zbus_names (merged into zbus 6)
+  "RUSTSEC-2026-0372", # zvariant_derive (merged into zbus 6)
 ]
